@@ -1,6 +1,6 @@
-**#1mg Clone**
+**1mg Clone**
 **Overview**
-1mg Clone is a web application that replicates the functionality of a product catalog and shopping site. 
+**1mg Clone** is a web application that replicates the functionality of a product catalog and shopping site. 
 It provides features for both administrators and regular users:
 
 . Admins can manage products, including CRUD (Create, Read, Update, Delete) operations.
