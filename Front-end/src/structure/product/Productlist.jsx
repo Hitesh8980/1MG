@@ -23,7 +23,7 @@ const ProductList = ({ products }) => {
   );
 
   return (
-    <Box border={'2px solid purple'} p={30}>
+    <Box p={30}>
       <Flex justifyContent="space-between" mb="4">
         <Text fontSize="2xl" fontWeight="bold">
           Products

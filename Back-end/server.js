@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const userRouter =require('./routes/user.route');
 const productRouter =require('./routes/product.route');
+const razorRouter = require('./routes/razor.route')
 const connection = require('./config/db')
 
 
@@ -18,6 +19,7 @@ app.get('/',(req,res)=>{
 
 app.use('/user',userRouter);
 app.use('/product',productRouter)
+app.use('/razor', razorRouter)
 
 
 app.listen(process.env.PORT,async()=>{

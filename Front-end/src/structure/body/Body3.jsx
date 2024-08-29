@@ -32,13 +32,13 @@ const Body3 = () => {
   }, []);
   return (
     <div>
-      <Box border={'2px solid blue'} bg="#f6f6f6" p={1} m={0}>
+      <Box  bg="#f6f6f6" p={1} m={0}>
         <Flex justifyContent={'space-between'} alignItems={'center'} m={3}>
           <Text fontSize="lg" fontWeight="bold">Super Saving Deals</Text>
           <Button bg={'red'} color={'white'} w={20} h={8}>See All</Button>
         </Flex>
         
-        <Box p={4} border={'2px solid green'}>
+        <Box p={4} >
           <Slider {...sliderSettings}>
             {products.map((Products) => (
               <Box key={products.id} p={4} borderWidth={1} borderRadius="md" overflow="hidden">

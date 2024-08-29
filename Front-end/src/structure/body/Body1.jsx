@@ -80,7 +80,7 @@ const Body1 = () => {
     <div>
       <Flex
         direction="column"
-        border="2px solid black"
+        
         p={19}
         bg="#f6f6f6"
         gap={10}
@@ -93,7 +93,7 @@ const Body1 = () => {
       </Flex>
       
       <Box
-        border="2px solid black"
+       
         boxShadow="lg"
         p={{ base: "8px 16px", md: "30px 20px" }}
         width={{ base: "90%", md: "70%", lg: "100vw" }}

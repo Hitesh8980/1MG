@@ -23,12 +23,23 @@ const Navbar2 = () => {
       borderBottom={1}
       borderStyle={'solid'}
       borderColor={useColorModeValue('gray.200', 'gray.900')}
-      px={10}
+      px={{ base: 4, sm: 6, md: 10 }}
+      py={2}
       m={1}
       minW={'100vw'}
     >
-      <Flex align={'center'} justify={'space-between'}>
-        <HStack spacing={4}>
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        align={'center'}
+        justify={'space-between'}
+        wrap={'wrap'}
+      >
+        <HStack
+          spacing={4}
+          mb={{ base: 2, md: 0 }}
+          w={{ base: '100%', md: 'auto' }}
+          align={'center'}
+        >
           <HStack
             spacing={1}
             bg={useColorModeValue('gray.100', 'gray.700')}
@@ -37,7 +48,7 @@ const Navbar2 = () => {
           >
             <Icon as={MdLocationOn} color="black" />
             <Text
-              fontSize="14px"
+              fontSize={{ base: '12px', md: '14px' }}
               fontWeight="700"
               color="black"
               fontFamily="'Clear Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif"
@@ -54,7 +65,7 @@ const Navbar2 = () => {
             <Input
               type="text"
               placeholder="Search for Medicines and Health Products"
-              fontSize="14px"
+              fontSize={{ base: '12px', md: '14px' }}
               bg={useColorModeValue('gray.100', 'gray.700')}
             />
           </InputGroup>
@@ -63,11 +74,18 @@ const Navbar2 = () => {
         <Spacer />
 
         {/* Offer Text and Quick Order Button */}
-        <HStack spacing={4}>
+        <HStack
+          spacing={4}
+          mb={{ base: 2, md: 0 }}
+          w={{ base: '100%', md: 'auto' }}
+          align={'center'}
+          direction={{ base: 'column', md: 'row' }}
+        >
           <Text
-            fontSize="14px"
+            fontSize={{ base: '12px', md: '14px' }}
             fontWeight="700"
             color="black"
+            textAlign={{ base: 'center', md: 'left' }}
             fontFamily="'Clear Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif"
           >
             ⚡ QUICK BUY! Get 15% off on medicines*
@@ -77,7 +95,7 @@ const Navbar2 = () => {
             bg="#FF6F61"
             color="white"
             fontWeight="700"
-            fontSize="14px"
+            fontSize={{ base: '12px', md: '14px' }}
             _hover={{ bg: '#e55a4c' }}
           >
             Quick order

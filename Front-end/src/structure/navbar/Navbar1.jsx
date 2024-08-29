@@ -26,13 +26,11 @@ import {
   ModalBody,
   Input,
   ModalFooter,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
   CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  SearchIcon,
 } from "@chakra-ui/icons";
 import logo from "./tata_1mg_logo.svg";
 import axios from "axios";
@@ -60,29 +58,21 @@ const Navbar1 = () => {
 
   const handleLogin = async () => {
     try {
-      console.log("Login data:", loginData); 
-  
       const response = await axios.post('https://onemg-1.onrender.com/user/Login', loginData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
-      console.log("Response data:", response.data); 
-  
       const { accessToken } = response.data;
-  
       if (accessToken) {
         localStorage.setItem('token', accessToken);
-        console.log("Token stored:", accessToken); 
         onLoginClose(); 
-      } else {
-        console.error("Token not found in the response");
       }
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
+
   const handleSignUp = async () => {
     try {
       const response = await axios.post(
@@ -93,6 +83,8 @@ const Navbar1 = () => {
       console.error("Sign up failed:", error);
     }
   };
+
+  const isAuthenticated = !!localStorage.getItem('token');
 
   return (
     <Box>
@@ -107,9 +99,9 @@ const Navbar1 = () => {
         borderStyle={"solid"}
         borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
-        justify={"space-between"}
+        justify={{ base: "space-between", md: "center" }}
       >
-        <HStack spacing={10} alignItems={"center"}>
+        <HStack spacing={5} alignItems={"center"}>
           <Box>
             <NavLink to="/">
               <Image src={logo} alt="TATA 1mg" h="24px" />
@@ -225,92 +217,28 @@ const Navbar1 = () => {
 
         <Spacer />
 
-        <HStack spacing={2}>
-          <Link href="#" onClick={onLoginOpen}>
-            Login{" "}
-          </Link>
-          <Divider orientation="vertical" height="20px" borderColor="black" />
-          <Link href="#" onClick={onSignUpOpen}>
-            Sign Up
-          </Link>
+        <HStack spacing={2} display={{ base: "none", md: "flex" }}>
+          {isAuthenticated ? (
+            <>
+              <Link href="#" onClick={() => {
+                localStorage.removeItem('token');
+                window.location.reload();
+              }}>
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="#" onClick={onLoginOpen}>
+                Login{" "}
+              </Link>
+              <Divider orientation="vertical" height="20px" borderColor="black" />
+              <Link href="#" onClick={onSignUpOpen}>
+                Sign Up
+              </Link>
+            </>
+          )}
           <Link href="#">Offers</Link>
-
-          <Modal isOpen={isLoginOpen} onClose={onLoginClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Login</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <Input
-                  placeholder="Email"
-                  mb={3}
-                  value={loginData.email}
-                  onChange={(e) =>
-                    setLoginData({ ...loginData, email: e.target.value })
-                  }
-                />
-                <Input
-                  placeholder="Password"
-                  type="password"
-                  value={loginData.password}
-                  onChange={(e) =>
-                    setLoginData({ ...loginData, password: e.target.value })
-                  }
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={handleLogin}>
-                  Login
-                </Button>
-                <Button variant="ghost" onClick={onLoginClose}>
-                  Cancel
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-
-          <Modal isOpen={isSignUpOpen} onClose={onSignUpClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Sign Up</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <Input
-                  placeholder="Username"
-                  mb={3}
-                  value={signUpData.username}
-                  onChange={(e) =>
-                    setSignUpData({ ...signUpData, username: e.target.value })
-                  }
-                />
-                <Input
-                  placeholder="Email"
-                  mb={3}
-                  value={signUpData.email}
-                  onChange={(e) =>
-                    setSignUpData({ ...signUpData, email: e.target.value })
-                  }
-                />
-                <Input
-                  placeholder="Password"
-                  type="password"
-                  value={signUpData.password}
-                  onChange={(e) =>
-                    setSignUpData({ ...signUpData, password: e.target.value })
-                  }
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={handleSignUp}>
-                  Sign Up
-                </Button>
-                <Button variant="ghost" onClick={onSignUpClose}>
-                  Cancel
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-
           <NavLink to="/cart">
             <Box as="span" position="relative">
               <Image
@@ -320,6 +248,120 @@ const Navbar1 = () => {
             </Box>
           </NavLink>
         </HStack>
+
+        {/* Mobile Menu Button */}
+        <IconButton
+          aria-label="Toggle Menu"
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          display={{ md: "none" }}
+          onClick={onToggle}
+          variant="outline"
+        />
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <Stack
+            display={{ md: "none" }}
+            spacing={4}
+            bg={useColorModeValue("white", "gray.800")}
+            p={4}
+            position="absolute"
+            top={0}
+            left={0}
+            right={0}
+            zIndex={10}
+          >
+            <Link href="#" onClick={onLoginOpen}>Login</Link>
+            <Link href="#" onClick={onSignUpOpen}>Sign Up</Link>
+            <Link href="#">Offers</Link>
+            <NavLink to="/cart">
+              <Box as="span" position="relative">
+                <Image
+                  src="https://img.icons8.com/material-outlined/24/000000/shopping-cart.png"
+                  alt="Cart"
+                />
+              </Box>
+            </NavLink>
+          </Stack>
+        )}
+
+        {/* Login Modal */}
+        <Modal isOpen={isLoginOpen} onClose={onLoginClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Login</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Input
+                placeholder="Email"
+                mb={3}
+                value={loginData.email}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, email: e.target.value })
+                }
+              />
+              <Input
+                placeholder="Password"
+                type="password"
+                value={loginData.password}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, password: e.target.value })
+                }
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={handleLogin}>
+                Login
+              </Button>
+              <Button variant="ghost" onClick={onLoginClose}>
+                Cancel
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+
+        {/* Sign Up Modal */}
+        <Modal isOpen={isSignUpOpen} onClose={onSignUpClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Sign Up</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Input
+                placeholder="Username"
+                mb={3}
+                value={signUpData.username}
+                onChange={(e) =>
+                  setSignUpData({ ...signUpData, username: e.target.value })
+                }
+              />
+              <Input
+                placeholder="Email"
+                mb={3}
+                value={signUpData.email}
+                onChange={(e) =>
+                  setSignUpData({ ...signUpData, email: e.target.value })
+                }
+              />
+              <Input
+                placeholder="Password"
+                type="password"
+                value={signUpData.password}
+                onChange={(e) =>
+                  setSignUpData({ ...signUpData, password: e.target.value })
+                }
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={handleSignUp}>
+                Sign Up
+              </Button>
+              <Button variant="ghost" onClick={onSignUpClose}>
+                Cancel
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Flex>
     </Box>
   );
