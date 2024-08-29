@@ -3,6 +3,7 @@ import ImageSlider from './Imageslider'
 import Navbar from './navbar/Navbar'
 import Footer from './footer/Footer'
 import Body from './body/Body'
+import ProductsPage from './product/Productspage'
 
 const Home = () => {
   return (
@@ -10,7 +11,8 @@ const Home = () => {
         <Navbar/>
         <ImageSlider/>
         <Body/>
-        {/* <Footer/> */}
+        
+        <Footer/>
       
     </div>
   )

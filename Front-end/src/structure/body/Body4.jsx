@@ -62,10 +62,10 @@ import {
           Now, isn't that easy? Why go all the way to the medicine store and wait in
           line, when you have Tata 1mg Pharmacy at your service.
         </Text>
-        <Text sfontSize={'18.4px'}  fontWeight={600} mt={8} mb={4}>
+        <Text fontSize={'18.4px'}  fontWeight={600} mt={8} mb={4}>
           The Feathers in Our Cap
         </Text>
-        <Text ffontSize="16px" mb={4} fontWeight={400} color={'#7c7c7c'}>
+        <Text fontSize="16px" mb={4} fontWeight={400} color={'#7c7c7c'}>
           At Tata 1mg, our goal is to make healthcare understandable, accessible and
           affordable in India. We set out on our journey in 2015, and have come a long
           way since then. Along the way, we have been conferred with prestigious titles

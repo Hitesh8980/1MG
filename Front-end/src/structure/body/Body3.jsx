@@ -20,7 +20,7 @@ const Body3 = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('https://api.example.com/products'); 
+        const response = await fetch('https://onemg-1.onrender.com/product/view-pro'); 
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -40,12 +40,12 @@ const Body3 = () => {
         
         <Box p={4} border={'2px solid green'}>
           <Slider {...sliderSettings}>
-            {products.map((product) => (
-              <Box key={product.id} p={4} borderWidth={1} borderRadius="md" overflow="hidden">
-                <Image src={product.image} alt={product.title} boxSize="200px" objectFit="cover" />
+            {products.map((Products) => (
+              <Box key={products.id} p={4} borderWidth={1} borderRadius="md" overflow="hidden">
+                <Image src={products.image} alt={products.title} boxSize="200px" objectFit="cover" />
                 <Stack spacing={2} mt={2}>
-                  <Text fontWeight="bold">{product.title}</Text>
-                  <Text color="gray.600">${product.price}</Text>
+                  <Text fontWeight="bold">{products.title}</Text>
+                  <Text color="gray.600">${products.price}</Text>
                 </Stack>
               </Box>
             ))}
