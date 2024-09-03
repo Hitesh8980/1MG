@@ -59,16 +59,28 @@ const Products = () => {
       <Box p={5}>
         <VStack spacing={5} mb={5} align="start">
           <HStack spacing={4}>
-            <Select onChange={(e) => setCategory(e.target.value)} value={category}>
+            <Select onChange={(e) => setCategory(e.target.value)} value={category} style={{
+          fontFamily: 'Clear Sans, Helvetica Neue, sans-serif',
+          color: '#FF6F61',
+          fontSize: '12px',
+        }}>
               <option value="all">All Categories</option>
               <option value="Dental Care">Dental Care</option>
+              <option value="Health Care">Health Care</option>
               <option value="Skin Care">Skin Care</option>
+              <option value="Hair Care">Hair Care</option>
+              <option value="Sexual Wellness">Sexual Wellness</option>
+              <option value="Feminine Care">Feminine Care</option>
               <option value="Vitamins">Vitamins</option>
-              <option value="Supplements">Supplements</option>
+              <option value="Fitness Supplements">Supplements</option>
             </Select>
 
-            <Select onChange={(e) => setSortBy(e.target.value)} value={sortBy}>
-              <option value="name">Name</option>
+            <Select onChange={(e) => setSortBy(e.target.value)} value={sortBy} style={{
+          fontFamily: 'Clear Sans, Helvetica Neue, sans-serif',
+          color: '#FF6F61',
+          fontSize: '12px',
+        }}>
+              <option value="name" >Name</option>
               <option value="price">Price</option>
             </Select>
           </HStack>

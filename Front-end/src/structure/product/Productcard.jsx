@@ -42,16 +42,13 @@ const ProductCard = ({ product }) => {
           <Text fontSize="sm" color="gray.500">
             ({product.reviewsCount} reviews)
           </Text>
+          
         </HStack>
-        {/* <HStack spacing={1} wrap="wrap" mb="2">
-          {product.highlights.map((highlight, index) => (
-            <Tooltip label={highlight} key={index}>
-              <Badge variant="outline" colorScheme="teal">
-                {highlight}
-              </Badge>
-            </Tooltip>
-          ))}
-        </HStack> */}
+        <HStack spacing={2} mb="2">
+          <Text fontSize="lg" color="black.500" fontWeight="bold">
+          {`₹ ${product.price}`}
+          </Text>
+        </HStack>
       </Box>
     </Box>
   );

@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Image, Text, VStack, HStack, Stack, Button, Select, Badge } from '@chakra-ui/react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useCart } from '../structure/cart/cartContext'; // Import correctly
+import { useCart } from '../structure/cart/cartContext'; 
 import Footer from './footer/Footer';
 import Navbar from './navbar/Navbar';
 
 const SingleProduct = () => {
   const { id } = useParams(); 
-  const navigate = useNavigate(); // Initialize the useNavigate hook
-  const { addToCart } = useCart(); // Use it inside the component
-
+  const navigate = useNavigate(); 
+  const { addToCart } = useCart(); 
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState('');
-  const [selectedQuantity, setSelectedQuantity] = useState(1); // State for selected quantity
+  const [selectedQuantity, setSelectedQuantity] = useState(1); 
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -28,27 +27,30 @@ const SingleProduct = () => {
     fetchProduct();
   }, [id]);
 
-  const hardcodedPrice = 962; 
-  const originalPrice = 1249; 
-  const discount = 23; 
+  if (!product) {
+    return <Text>Loading...</Text>;
+  }
+
+  // Calculate the discount and final price
+  const originalPrice = product.price; // Assuming `product.price` is the original price
+  const discountPercentage = 10;
+  const discountAmount = (originalPrice * discountPercentage) / 100;
+  const discountedPrice = originalPrice - discountAmount;
+
   const quantityOptions = [
     { value: '1', label: '1 Pack' },
     { value: '2', label: '2 Pack' },
     { value: '3', label: '3 Pack' },
   ]; 
 
-  if (!product) {
-    return <Text>Loading...</Text>;
-  }
-
   const handleAddToCart = () => {
     addToCart({
       id: product._id,
       name: product.name,
       image: product.mainImage,
-      price: hardcodedPrice,
+      price: discountedPrice, // Use the discounted price
       originalPrice: originalPrice,
-      quantity: selectedQuantity, // Use selected quantity
+      quantity: selectedQuantity, 
     });
     
     navigate('/cart'); 
@@ -103,13 +105,11 @@ const SingleProduct = () => {
         {/* Right Section - Price and Purchase Options */}
         <VStack align={{ base: 'center', md: 'flex-start' }} spacing={4} p={5} bg="gray.50" borderRadius="md" w={{ base: '100%', md: 'auto' }}>
           <HStack spacing={2}>
-            <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold">₹{hardcodedPrice}</Text>
+            <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold">₹{discountedPrice.toFixed(2)}</Text>
             {originalPrice && (
-              <Text as="s" color="gray.500">₹{originalPrice}</Text>
+              <Text as="s" color="gray.500">₹{originalPrice.toFixed(2)}</Text>
             )}
-            {discount && (
-              <Badge colorScheme="green" fontSize={{ base: 'sm', md: 'md' }}>{discount}% off</Badge>
-            )}
+            <Badge colorScheme="green" fontSize={{ base: 'sm', md: 'md' }}>{discountPercentage}% off</Badge>
           </HStack>
           <Text fontSize="sm" color="gray.500" textAlign={{ base: 'center', md: 'left' }}>
             Inclusive of all taxes

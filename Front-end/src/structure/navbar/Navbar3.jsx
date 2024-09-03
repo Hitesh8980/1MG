@@ -146,7 +146,9 @@ import {
                   </MenuButton>
                   <MenuList>
                     {item.subcategories.map((subitem, subIndex) => (
-                      <MenuItem key={subIndex} as={Link} href={subitem.link}>
+                      <MenuItem key={subIndex} as={Link} href={subitem.link} color={'#FF6F61'} fontSize={12}sx={{
+                        fontFamily: 'Clear Sans, Helvetica Neue, sans-serif',
+                      }}>
                         {subitem.name}
                       </MenuItem>
                     ))}

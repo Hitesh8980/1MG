@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box, Image, Text, VStack, HStack, Stack, Button, Divider, Badge,
 } from '@chakra-ui/react';
@@ -12,7 +12,8 @@ const Cart = () => {
 
   const hardcodedDeliveryCharge = 4;
   const hardcodedTotalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const hardcodedDiscount = cartItems.length > 1 ? 1785 : 0; 
+  const hardcodedDiscount = cartItems.length > 1 ? 1785 : 0;
+  const toBePaid = hardcodedTotalAmount - hardcodedDiscount + hardcodedDeliveryCharge;
 
   return (
     <>
@@ -91,7 +92,7 @@ const Cart = () => {
               <Divider my={3} />
               <HStack justify="space-between" fontWeight="bold" fontSize="lg">
                 <Text>To be paid</Text>
-                <Text>₹{hardcodedTotalAmount - hardcodedDiscount + hardcodedDeliveryCharge}</Text>
+                <Text>₹{toBePaid}</Text>
               </HStack>
             </Box>
 
@@ -103,9 +104,9 @@ const Cart = () => {
               </HStack>
             </Box>
 
-            <Link to="/checkout">
-  <Button mt={6} colorScheme="red" w="full" size="lg">Continue</Button>
-</Link>
+            <Link to={`/checkout?amount=${toBePaid}`}>
+              <Button mt={6} colorScheme="red" w="full" size="lg">Continue</Button>
+            </Link>
           </Box>
         </HStack>
       </Box>

@@ -1,12 +1,21 @@
-
-import React from 'react';
-import { Button, useToast, Box, Text, Input, requiredChakraThemeKeys, Image } from '@chakra-ui/react';
-import { NavLink } from 'react-router-dom';
-import  logo  from './navbar/tata_1mg_logo.svg'
+import React, { useEffect, useState } from 'react';
+import { Button, useToast, Box, Text, Input, Image } from '@chakra-ui/react';
+import { NavLink, useLocation } from 'react-router-dom';
+import logo from './navbar/tata_1mg_logo.svg';
 
 const Checkout = () => {
   const toast = useToast();
-  const [amount, setAmount] = React.useState('');
+  const [amount, setAmount] = useState('');
+  const location = useLocation();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const initialAmount = queryParams.get('amount');
+    console.log('Initial amount from query:', initialAmount); 
+    if (initialAmount) {
+      setAmount(initialAmount);
+    }
+  }, [location]);
 
   const handlePayment = async () => {
     if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
@@ -21,7 +30,7 @@ const Checkout = () => {
     }
 
     try {
-      const response = await fetch('https://onemg-t0gx.onrender.com/razor/createOrder', {
+      const response = await fetch('https://onemg-1.onrender.com/razor/createOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,9 +44,8 @@ const Checkout = () => {
         throw new Error('Order creation failed');
       }
 
-      
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,  
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: data.amount,
         currency: data.currency,
         name: '1MG',
@@ -58,7 +66,6 @@ const Checkout = () => {
           color: '#3399cc',
         },
       };
-      
 
       const rzp = new window.Razorpay(options);
       rzp.open();
@@ -78,7 +85,7 @@ const Checkout = () => {
     try {
       const { order_id, payment_id, signature } = response;
 
-      const res = await fetch('https://onemg-t0gx.onrender.com/razor/verifyPayment', {
+      const res = await fetch('https://onemg-1.onrender.com/razor/verifyPayment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -113,26 +120,26 @@ const Checkout = () => {
 
   return (
     <>
-    <Box p={4}>
-            <NavLink to="/">
-              <Image src={logo} alt="TATA 1mg" h="54px" />
-            </NavLink>
-          </Box>
-    <Box p={5} maxW="md" mx="auto">
-      <Text mb={4} fontSize="2xl" fontWeight="bold">Checkout</Text>
-      <Input
-        type="number"
-        placeholder="Enter amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        mb={4}
-        min="1"
-        step="any"
-      />
-      <Button colorScheme="teal" onClick={handlePayment}>
-        Pay with Razorpay
-      </Button>
-    </Box>
+      <Box p={4}>
+        <NavLink to="/">
+          <Image src={logo} alt="TATA 1mg" h="54px" />
+        </NavLink>
+      </Box>
+      <Box p={5} maxW="md" mx="auto">
+        <Text mb={4} fontSize="2xl" fontWeight="bold">Checkout</Text>
+        <Input
+          type="number"
+          placeholder="Enter amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          mb={4}
+          min="1"
+          step="any"
+        />
+        <Button colorScheme="teal" onClick={handlePayment}>
+          Pay with Razorpay
+        </Button>
+      </Box>
     </>
   );
 };
