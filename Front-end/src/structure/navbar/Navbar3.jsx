@@ -125,40 +125,52 @@ import {
   
     return (
       <Box bg="white" p={1}>
-        <Flex align="center" justify="space-between" mx={10}>
-          <HStack spacing={5} justifyContent={'space-evenly'}>
-            {menuItems.map((item, index) => {
-              const { isOpen, onOpen, onClose } = useDisclosure();
-              return (
-                <Menu 
-                  key={index} 
-                  isOpen={isOpen} 
-                  onClose={onClose} 
-                  onOpen={onOpen} 
-                  onMouseEnter={onOpen} 
-                  onMouseLeave={onClose}
+      <Flex align="center" justify="space-between" mx={{ base: 4, md: 10 }}>
+        <HStack spacing={{ base: 2, md: 5 }} justifyContent="space-evenly" wrap="wrap">
+          {menuItems.map((item, index) => {
+            const { isOpen, onOpen, onClose } = useDisclosure();
+            return (
+              <Menu
+                key={index}
+                isOpen={isOpen}
+                onClose={onClose}
+                onOpen={onOpen}
+                onMouseEnter={onOpen}
+                onMouseLeave={onClose}
+              >
+                <MenuButton
+                  as={Link}
+                  href="#"
+                  _hover={{ textDecoration: 'none' }}
+                  fontSize={{ base: 'sm', md: '13px' }}
                 >
-                  <MenuButton as={Link} href="#">
-                    <Flex align="center">
-                      <Text fontSize={13}>{item.title}</Text>
-                      <ChevronDownIcon ml={2} />
-                    </Flex>
-                  </MenuButton>
-                  <MenuList>
-                    {item.subcategories.map((subitem, subIndex) => (
-                      <MenuItem key={subIndex} as={Link} href={subitem.link} color={'#FF6F61'} fontSize={12}sx={{
+                  <Flex align="center">
+                    <Text>{item.title}</Text>
+                    <ChevronDownIcon ml={1} />
+                  </Flex>
+                </MenuButton>
+                <MenuList>
+                  {item.subcategories.map((subitem, subIndex) => (
+                    <MenuItem
+                      key={subIndex}
+                      as={Link}
+                      href={subitem.link}
+                      color={'#FF6F61'}
+                      fontSize={{ base: 'xs', md: '12px' }}
+                      sx={{
                         fontFamily: 'Clear Sans, Helvetica Neue, sans-serif',
-                      }}>
-                        {subitem.name}
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </Menu>
-              );
-            })}
-          </HStack>
-        </Flex>
-      </Box>
+                      }}
+                    >
+                      {subitem.name}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+            );
+          })}
+        </HStack>
+      </Flex>
+    </Box>
     );
   };
   

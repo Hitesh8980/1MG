@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
-  Box, Image, Text, VStack, HStack, Stack, Button, Divider, Badge,
+  Box,
+  Image,
+  Text,
+  VStack,
+  HStack,
+  Stack,
+  Button,
+  Divider,
+  Badge,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { useCart } from './cartContext';
 import Footer from '../footer/Footer';
@@ -15,11 +24,13 @@ const Cart = () => {
   const hardcodedDiscount = cartItems.length > 1 ? 1785 : 0;
   const toBePaid = hardcodedTotalAmount - hardcodedDiscount + hardcodedDeliveryCharge;
 
+  const isDesktop = useBreakpointValue({ base: false, md: true });
+
   return (
     <>
       <Navbar />
       <Box p={5}>
-        <HStack spacing={6} align="start" justify="space-between">
+        <HStack spacing={6} align="start" justify="space-between" flexDirection={{ base: 'column', md: 'row' }}>
           {/* Left Box: Cart Items */}
           <Box flex="1">
             <Text fontSize="2xl" fontWeight="bold">{cartItems.length} items added</Text>
@@ -54,7 +65,7 @@ const Cart = () => {
           </Box>
 
           {/* Right Box: Care Plan and Summary */}
-          <Box flex="1">
+          <Box flex="1" mt={{ base: 4, md: 0 }}>
             {/* Care Plan */}
             <Box p={5} bg="gray.100" borderRadius="md">
               <Text fontSize="lg" fontWeight="bold" mb={2}>Care Plan</Text>

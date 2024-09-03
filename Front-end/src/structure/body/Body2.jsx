@@ -39,16 +39,16 @@ const cardData = [
 const Body2 = () => {
   return (
     <div>
-      <Box  bg="#f6f6f6" p={4} m={0}>
+      <Box bg="#f6f6f6" p={{ base: 2, md: 4 }} m={0}>
         <Flex
           direction={{ base: 'column', md: 'row' }}
           justifyContent="space-between"
           alignItems="center"
-          gap={{ base: 4, md: 8 }}
-          mb={4}
+          gap={{ base: 2, md: 8 }}
+          mb={{ base: 2, md: 4 }}
         >
           <Box>
-            <Text fontSize={{ base: 'md', md: 'lg' }}>Full body health checkups</Text>
+            <Text fontSize={{ base: 'sm', md: 'lg' }}>Full body health checkups</Text>
           </Box>
           <Button
             bg="red"
@@ -61,18 +61,18 @@ const Body2 = () => {
           </Button>
         </Flex>
       </Box>
-      <Box  p={4}>
+      <Box p={{ base: 2, md: 4 }}>
         <Flex
           wrap="wrap"
           justifyContent="space-between"
           alignItems="flex-start"
-          gap={4}
+          gap={{ base: 2, md: 4 }}
         >
           {cardData.map((data, index) => (
             <Box
               key={index}
-              w={{ base: 'full', sm: '45%', md: '22%' }}
-              p={4}
+              w={{ base: 'full', sm: '48%', md: '22%' }}
+              p={{ base: 2, md: 4 }}
               mb={4}
               boxShadow="lg"
               borderRadius="md"
@@ -82,23 +82,23 @@ const Body2 = () => {
                 <Text fontWeight="bold" fontSize={{ base: 'sm', md: 'md' }}>
                   {data.title}
                 </Text>
-                <Badge colorScheme={data.badgeColor} fontSize={{ base: 'sm', md: 'md' }}>
+                <Badge colorScheme={data.badgeColor} fontSize={{ base: 'xs', md: 'md' }}>
                   {data.badgeText}
                 </Badge>
               </HStack>
-              <VStack spacing={2} align="start">
-                <HStack spacing={4}>
-                  <Text fontSize={{ base: 'lg', md: '2xl' }} fontWeight="bold">
+              <VStack spacing={{ base: 1, md: 2 }} align="start">
+                <HStack spacing={{ base: 2, md: 4 }}>
+                  <Text fontSize={{ base: 'md', md: '2xl' }} fontWeight="bold">
                     {data.price}
                   </Text>
                   <Text
-                    fontSize={{ base: 'sm', md: 'xl' }}
+                    fontSize={{ base: 'xs', md: 'xl' }}
                     textDecoration="line-through"
                     color="gray.500"
                   >
                     {data.originalPrice}
                   </Text>
-                  <Badge colorScheme="red" fontSize={{ base: 'sm', md: 'md' }}>
+                  <Badge colorScheme="red" fontSize={{ base: 'xs', md: 'md' }}>
                     {data.discount}
                   </Badge>
                 </HStack>

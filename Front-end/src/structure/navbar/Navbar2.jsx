@@ -11,11 +11,18 @@ import {
   Icon,
   Spacer,
   useColorModeValue,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { MdLocationOn } from 'react-icons/md';
 
 const Navbar2 = () => {
+  const [isLargerThanMD] = useMediaQuery('(min-width: 768px)');
+
+  if (!isLargerThanMD) {
+    return null;
+  }
+
   return (
     <Box
       bg={useColorModeValue('white', 'gray.800')}
