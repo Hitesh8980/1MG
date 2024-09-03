@@ -37,4 +37,4 @@ router.post('/verifyPayment', (req, res) => {
         res.status(400).send({ status: 'failure' });
     }
 });
-module.exports = router
+module.exports = router;
