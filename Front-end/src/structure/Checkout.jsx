@@ -1,171 +1,139 @@
-import React, { useState } from "react";
-import {
-  Flex,
-  Heading,
-  Text,
-  Button,
-  Box,
-  HStack,
-  VStack,
-  Input,
-  useBreakpointValue,
-  useDisclosure,
-  useToast,
-  Divider,
-} from "@chakra-ui/react";
+
+import React from 'react';
+import { Button, useToast, Box, Text, Input, requiredChakraThemeKeys, Image } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
+import  logo  from './navbar/tata_1mg_logo.svg'
 
 const Checkout = () => {
-  const [selectedMode, setSelectedMode] = useState("");
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const [amount, setAmount] = React.useState('');
 
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  const handlePayment = async () => {
+    if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+      toast({
+        title: 'Invalid Amount',
+        description: 'Please enter a valid amount.',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
 
-  const handleModeChange = (mode) => {
-    setSelectedMode(mode);
+    try {
+      const response = await fetch('https://onemg-t0gx.onrender.com/razor/createOrder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount: parseFloat(amount), currency: 'INR' }),
+      });
+
+      const data = await response.json();
+
+      if (!data.id) {
+        throw new Error('Order creation failed');
+      }
+
+      
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,  
+        amount: data.amount,
+        currency: data.currency,
+        name: '1MG',
+        description: 'Test Transaction',
+        order_id: data.id,
+        handler: function (response) {
+          verifyPayment(response);
+        },
+        prefill: {
+          name: 'Customer Name',
+          email: 'customer@example.com',
+          contact: '9999999999',
+        },
+        notes: {
+          address: 'Customer Address',
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+      
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error('Payment Error:', error);
+      toast({
+        title: 'Payment Error',
+        description: 'There was an error while processing your payment.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
-  const handlePayment = () => {
-    toast({
-      title: "Order Successful",
-      description: "Your order has been placed successfully!",
-      status: "success",
-      duration: 4000,
-      isClosable: true,
-      position: "top",
-    });
+  const verifyPayment = async (response) => {
+    try {
+      const { order_id, payment_id, signature } = response;
+
+      const res = await fetch('https://onemg-t0gx.onrender.com/razor/verifyPayment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ order_id, payment_id, signature }),
+      });
+
+      const result = await res.json();
+
+      if (result.status === 'success') {
+        toast({
+          title: 'Payment Successful',
+          description: 'Your payment was processed successfully.',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        throw new Error('Payment verification failed');
+      }
+    } catch (error) {
+      console.error('Verification Error:', error);
+      toast({
+        title: 'Verification Error',
+        description: 'There was an error while verifying your payment.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
-    <Flex
-      direction={isMobile ? "column" : "row"}
-      justifyContent="space-between"
-      alignItems="flex-start"
-      gap={isMobile ? 4 : 10}
-      mt={10}
-      px={4}
-      w="full"
-    >
-      <VStack spacing={4} w={isMobile ? "full" : "40%"}>
-        <Heading as="h2" size="lg" fontWeight="bold">
-          Choose Payment Mode
-        </Heading>
-
-        {/* Payment Options */}
-        {["UPI", "Wallets", "Debit & Credit Card", "Net Banking", "Pay by Cash"].map((mode) => (
-          <Box
-            key={mode}
-            bg="gray.100"
-            p={4}
-            borderRadius="md"
-            cursor="pointer"
-            onClick={() => handleModeChange(mode)}
-          >
-            <HStack justifyContent="space-between" w="full">
-              <Text fontWeight="bold">{mode}</Text>
-              {selectedMode === mode && (
-                <Button colorScheme="green" onClick={handlePayment}>
-                  Pay Now
-                </Button>
-              )}
-            </HStack>
+    <>
+    <Box p={4}>
+            <NavLink to="/">
+              <Image src={logo} alt="TATA 1mg" h="54px" />
+            </NavLink>
           </Box>
-        ))}
-      </VStack>
-
-      {/* Divider between payment modes and payment details */}
-      {!isMobile && (
-        <Divider orientation="vertical" borderColor="gray.300" height="auto" mx={4} />
-      )}
-
-      {/* Input Fields Section */}
-      <Flex direction="column" w={isMobile ? "full" : "40%"} alignItems="flex-start">
-        {selectedMode === "UPI" && (
-          <Box bg="gray.100" p={4} borderRadius="md" w="full">
-            <Text fontSize="sm" color="gray.500">
-              Directly pay from your bank account
-            </Text>
-            <Input placeholder="Enter UPI ID" bg="white" borderRadius="md" />
-          </Box>
-        )}
-        {selectedMode === "Wallets" && (
-          <Box bg="gray.100" p={4} borderRadius="md" w="full">
-            <Text fontSize="sm" color="gray.500">
-              Pay using your preferred wallet
-            </Text>
-            <Input placeholder="Enter Wallet Number or ID" bg="white" borderRadius="md" />
-          </Box>
-        )}
-        {selectedMode === "Debit & Credit Card" && (
-          <Box bg="gray.100" p={4} borderRadius="md" w="full">
-            <Text fontSize="sm" color="gray.500">
-              Securely pay with your card
-            </Text>
-            <Input placeholder="Card Number" bg="white" borderRadius="md" />
-            <HStack w="full" spacing={2}>
-              <Input placeholder="MM/YY" bg="white" borderRadius="md" />
-              <Input placeholder="CVV" bg="white" borderRadius="md" />
-            </HStack>
-          </Box>
-        )}
-        {selectedMode === "Net Banking" && (
-          <Box bg="gray.100" p={4} borderRadius="md" w="full">
-            <Text fontSize="sm" color="gray.500">
-              Pay directly from your bank account
-            </Text>
-            <Input placeholder="Select Bank" bg="white" borderRadius="md" />
-          </Box>
-        )}
-        {selectedMode === "Pay by Cash" && (
-          <Box bg="gray.100" p={4} borderRadius="md" w="full">
-            <Text fontSize="sm" color="gray.500" mt={2}>
-              Pay in person
-            </Text>
-          </Box>
-        )}
-      </Flex>
-
-      {/* Divider between payment details and offer section */}
-      {!isMobile && (
-        <Divider orientation="vertical" borderColor="gray.300" height="auto" mx={4} />
-      )}
-
-      {/* Offer Section */}
-      <VStack spacing={4} w={isMobile ? "full" : "20%"} alignItems="flex-start">
-        <Box
-          bg="green.100"
-          p={4}
-          borderRadius="md"
-          cursor="pointer"
-          onClick={onOpen}
-        >
-          <HStack spacing={2} alignItems="center">
-            <Box
-              bg="green.500"
-              w={4}
-              h={4}
-              borderRadius="full"
-              color="white"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Text fontSize="xs" fontWeight="bold">
-                ₹
-              </Text>
-            </Box>
-            <Text fontSize="sm" fontWeight="bold" color="green.500">
-              Get up to INR 500 cashback on a minimum transaction of INR 600
-              when using UPI with a Rupay credit card. Offer ends 31st Aug
-              2024.
-            </Text>
-          </HStack>
-          <Text fontSize="sm" fontWeight="bold" color="green.500" mt={2}>
-            See all offers
-          </Text>
-        </Box>
-      </VStack>
-    </Flex>
+    <Box p={5} maxW="md" mx="auto">
+      <Text mb={4} fontSize="2xl" fontWeight="bold">Checkout</Text>
+      <Input
+        type="number"
+        placeholder="Enter amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        mb={4}
+        min="1"
+        step="any"
+      />
+      <Button colorScheme="teal" onClick={handlePayment}>
+        Pay with Razorpay
+      </Button>
+    </Box>
+    </>
   );
 };
 

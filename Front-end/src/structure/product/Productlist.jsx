@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Box, SimpleGrid, Flex, IconButton, Text } from "@chakra-ui/react";
+import { Box, SimpleGrid, Flex, IconButton, Text, Button } from "@chakra-ui/react";
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import ProductCard from "./Productcard";
+import { useNavigate } from "react-router-dom";
 
 const ProductList = ({ products }) => {
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 3; 
+  const itemsPerPage = 3;
+  const navigate = useNavigate();
 
   const handleNextPage = () => {
     setCurrentPage((prev) =>
@@ -25,8 +27,8 @@ const ProductList = ({ products }) => {
   return (
     <Box p={30}>
       <Flex justifyContent="space-between" mb="4">
-        <Text fontSize="2xl" fontWeight="bold">
-          Products
+        <Text fontSize={{ base: 'md', md: 'lg' }}>
+          Products of the week
         </Text>
         <Box>
           <IconButton
@@ -36,6 +38,13 @@ const ProductList = ({ products }) => {
             aria-label="Previous Page"
             mr="2"
           />
+           <Button onClick={() => navigate('/products')} bg="red"
+            color="white"
+            w={{ base: 'full', md: 'auto' }}
+            h={8}
+            mt={{ base: 2, md: 0 }}>
+      See All
+    </Button>
           <IconButton
             icon={<ArrowForwardIcon />}
             onClick={handleNextPage}

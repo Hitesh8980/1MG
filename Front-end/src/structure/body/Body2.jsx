@@ -27,7 +27,7 @@ const cardData = [
     badgeText: "NEW",
   },
   {
-    title: "Complete Care Package",
+    title: "Complete Care Pac..",
     price: "₹1999",
     originalPrice: "₹3998",
     discount: "50% Off",

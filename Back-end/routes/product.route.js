@@ -8,7 +8,7 @@ router.post('/add-pro', authenticateToken, async (req, res) => {
   if (req.user.role !== 'admin') return res.sendStatus(403); 
 
   try {
-      const { name, brand, rating, reviewsCount,category, highlights, description, mainImage, additionalImages } = req.body;
+      const { name, brand,price, rating, reviewsCount,category, highlights, description, mainImage, additionalImages } = req.body;
 
       if (!name || !brand || !description || !mainImage) {
           return res.status(400).json({ message: 'Name, brand, description, and main image are required' });
@@ -18,6 +18,7 @@ router.post('/add-pro', authenticateToken, async (req, res) => {
       const product = new Product({
           name,
           brand,
+          price,
           rating: rating || 0, 
           reviewsCount: reviewsCount || 0, 
           category,

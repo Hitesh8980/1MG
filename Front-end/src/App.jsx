@@ -7,6 +7,7 @@ import Checkout from './structure/Checkout';
 import { AuthProvider } from './structure/hook/useAUth';
 import PrivateRoute from './structure/PrivateRoute';
 import { CartProvider } from './structure/cart/cartContext';
+import Products from './structure/product/Products';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/cart"  element={<Cart />} />
           <Route path="/product/:id" element={<Singleproduct />}  />
+          <Route path="/products" element={<Products/>}/>
           <Route path="/checkout"  element={<PrivateRoute element={Checkout} />} />
         </Routes>
       </Router>

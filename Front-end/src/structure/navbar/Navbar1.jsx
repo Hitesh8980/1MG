@@ -76,11 +76,29 @@ const Navbar1 = () => {
   const handleSignUp = async () => {
     try {
       const response = await axios.post(
-        "https://onemg-1.onrender.com/user/signup",
-        signUpData
+        "https://onemg-1.onrender.com/user/Signup",
+        signUpData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
+      onSignUpClose();
+      onLoginOpen();
     } catch (error) {
-      console.error("Sign up failed:", error);
+      if (error.response) {
+        console.error("Sign up failed:", error.response.data);
+        console.error("Status code:", error.response.status);
+        console.error("Headers:", error.response.headers);
+        alert(`Sign up failed: ${error.response.data.message || error.response.statusText}`);
+      } else if (error.request) {
+        console.error("Sign up failed:", error.request);
+        alert("Sign up failed: No response from the server");
+      } else {
+        console.error("Sign up failed:", error.message);
+        alert(`Sign up failed: ${error.message}`);
+      }
     }
   };
 

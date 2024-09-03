@@ -8,7 +8,11 @@ const ProductsPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://onemg-1.onrender.com/product/view-pro");
+        const response = await axios.get("https://onemg-1.onrender.com/product/view-pro",{
+          params: {
+            limit: 17 
+          }
+        });
         setProducts(response.data.products);
       } catch (error) {
         console.error("Error fetching products:", error);

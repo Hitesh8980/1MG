@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
       borderRadius="lg"
       overflow="hidden"
       padding="1"
-      maxW="350px"
+      maxW="300px"
       cursor="pointer"
       onClick={handleClick}
     >
@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
             ({product.reviewsCount} reviews)
           </Text>
         </HStack>
-        <HStack spacing={1} wrap="wrap" mb="2">
+        {/* <HStack spacing={1} wrap="wrap" mb="2">
           {product.highlights.map((highlight, index) => (
             <Tooltip label={highlight} key={index}>
               <Badge variant="outline" colorScheme="teal">
@@ -51,7 +51,7 @@ const ProductCard = ({ product }) => {
               </Badge>
             </Tooltip>
           ))}
-        </HStack>
+        </HStack> */}
       </Box>
     </Box>
   );

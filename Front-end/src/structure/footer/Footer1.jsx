@@ -13,7 +13,7 @@ const Footer1 = () => {
   const isDesktop = useBreakpointValue({ base: false, md: true });
 
   return (
-    <Box as="footer" bg="white" py={8} boxShadow="md" border="2px solid black">
+    <Box as="footer" bg="white" py={8} boxShadow="md" >
       <Box textAlign={isDesktop ? 'center' : 'left'} mb={isDesktop ? 6 : 4}>
         <Heading as="h3" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold" mb={2}>
           INDIA’S LARGEST HEALTHCARE PLATFORM

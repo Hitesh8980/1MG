@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 
 const sliderSettings = {
     dots: true,
@@ -35,7 +36,7 @@ const Body3 = () => {
       <Box  bg="#f6f6f6" p={1} m={0}>
         <Flex justifyContent={'space-between'} alignItems={'center'} m={3}>
           <Text fontSize="lg" fontWeight="bold">Super Saving Deals</Text>
-          <Button bg={'red'} color={'white'} w={20} h={8}>See All</Button>
+          <Button bg={'red'} color={'white'} w={20} h={8} >See All</Button>
         </Flex>
         
         <Box p={4} >
