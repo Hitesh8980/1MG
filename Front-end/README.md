@@ -21,8 +21,11 @@ Responsive Design: Works on all devices - desktop, tablet, and mobile.
 Here are the technologies and tools used to build this project:
 
 HTML: For the basic structure of the website.
+
 CSS: To style the website and make it look nice.
+
 JavaScript: To make the site interactive.
+
 React : For building the user interface efficiently.
 
 **📋 How to Use**
@@ -32,21 +35,28 @@ You don’t need to do anything special to use this project, but if you’re int
 Clone the Repository:
 
 Click on the "Code" button and copy the link.
+
 Open your terminal or command prompt.
+
 Type git clone <link> and press Enter.
+
 Navigate to the Project Folder:
 
 cd Front-end
 Install Dependencies:
 
 Type npm install or yarn install and press Enter.
+
 Run the Project:
 
 Type npm run dev or yarn start and press Enter.
+
 Open Your Browser:
 
 Visit http://localhost:5173 to see the website running on your local machine.
-📬 Contact
+
+**📬 Contact**
+
 If you have any questions or need further assistance, feel free to reach out:
 
 Email: hitesh.sharma176@gmail.com
