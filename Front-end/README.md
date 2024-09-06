@@ -1,6 +1,6 @@
 **1mg Clone - Front-End**
 
-**Welcome to the 1mg Clone project! 🎉
+Welcome to the 1mg Clone project! 🎉
 
 
 This project is a simple reproduction of the 1mg website. 1mg is a popular health and wellness platform where users can browse and purchase medicines, health products, and more. The purpose of this clone is to showcase how a similar site can be built using front-end technologies.
@@ -10,7 +10,7 @@ You can see the live version of the 1mg Clone here:( https://1mg-onlinepharmcy.n
 
 
 
-🌟 Features
+**🌟 Features**
 
 Product Search: Easily find medicines and health products.
 Product Details: Get detailed information about each product.
@@ -51,8 +51,11 @@ If you have any questions or need further assistance, feel free to reach out:
 
 Email: hitesh.sharma176@gmail.com
 GitHub: https://github.com/Hitesh8980
-💬 Feedback
+
+**💬 Feedback**
+
 I’d love to hear your thoughts! Let me know if you have any feedback or suggestions.
+
 
 Thanks for checking out the 1mg Clone! 😊
 
