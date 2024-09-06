@@ -1,19 +1,23 @@
 **1mg Clone - Front-End**
+
 **Welcome to the 1mg Clone project! 🎉
-**
+
+
 This project is a simple reproduction of the 1mg website. 1mg is a popular health and wellness platform where users can browse and purchase medicines, health products, and more. The purpose of this clone is to showcase how a similar site can be built using front-end technologies.
 
 **🚀 Live Demo**
-You can see the live version of the 1mg Clone here: https://1mg-onlinepharmcy.netlify.app/
+You can see the live version of the 1mg Clone here:( https://1mg-onlinepharmcy.netlify.app/)
 
 
 
 🌟 Features
+
 Product Search: Easily find medicines and health products.
 Product Details: Get detailed information about each product.
 Responsive Design: Works on all devices - desktop, tablet, and mobile.
 
 🛠️ **Technologies Used**
+
 Here are the technologies and tools used to build this project:
 
 HTML: For the basic structure of the website.
@@ -22,6 +26,7 @@ JavaScript: To make the site interactive.
 React : For building the user interface efficiently.
 
 **📋 How to Use**
+
 You don’t need to do anything special to use this project, but if you’re interested in how it’s made or want to run it locally, here’s a simple guide:
 
 Clone the Repository:
